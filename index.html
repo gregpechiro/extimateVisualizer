@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!--[if lt IE 9]>
+            <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+		<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+		<script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js" charset="utf-8"></script>
+		<script src="orderedMap.js" charset="utf-8"></script>
+		<script src="main.js" charset="utf-8"></script>
+		<script src="html2canvas.js" charset="utf-8"></script>
+
+		<style>
+			.circle {
+				border-radius: 15px;
+				width:100%;
+				border: 2px solid black;
+				margin-left: auto;
+				margin-right: auto;
+				position:relative;
+				text-align: center;
+			}
+
+			.circle-caption {
+				display: block;
+				left: 0;
+				height: 1em;
+				position: absolute;
+				right: 0;
+				top: 50%;
+				margin-top: -.5em;
+				text-shadow: none;
+			}
+			.ui-header .ui-title, .ui-footer .ui-title {
+				margin: 0 1em 0 1em;
+			}
+		</style>
+
+		<title>Home</title>
+	</head>
+
+	<body>
+
+		<div data-role="page" id="main">
+			<div data-role="header">
+				<h1>Project/Feature Name</h1>
+			</div>
+			<div data-role="main" class="ui-content">
+				<span id="projectName-error" style="color:red;display:none;">Cannot be blank</span>
+				<input type="text" name="name" id="projectName" value="">
+				<a id="start" class="ui-btn ui-corner-all">Next</a>
+			</div>
+		</div>
+
+		<!--<div data-role="page" id="stage-0">
+
+			<div data-role="header">
+				<h1>Stage Name</h1>
+			</div>
+			<div data-role="main" class="ui-content">
+				<span id="name-error" style="color:red;display:none;">Cannot be blank</span>
+				<input type="text" name="name" id="name" value="">
+			</div>
+
+
+			<div data-role="header">
+				<h1>Time Scale</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<input type="range" name="time" id="time" data-highlight="true" min="1" max="10" value="1">
+			</div>
+
+			<div data-role="header">
+				<h1>Complexity Scale</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<input type="range" name="complex" id="complex" data-highlight="true" min="1" max="10" value="1">
+			</div>
+
+			<div id="main" data-role="main" class="ui-content">
+				<a id="next-stage" class="ui-btn ui-corner-all">Next</a>
+				<a id="done" class="ui-btn ui-corner-all" >Done</a>
+				<a id="back" class="ui-btn ui-corner-all" >Back</a>
+			</div>
+
+		</div>-->
+
+		<div data-role="page" id="done">
+			<div data-role="header">
+				<h1 id="done-header">Diagram</h1>
+			</div>
+
+			<!-- download link (needs to be hidden) -->
+	   		<a style="display:none;" id="hiddenDownload">GET</a>
+	   		<!-- download link -->
+
+			<div id="done-main" data-role="main" class="ui-content">
+				<a id="fix" href="#main" class="ui-btn ui-corner-all" data-transition="slide" data-direction="reverse">Fix</a>
+				<a id="save" class="ui-btn ui-corner-all">Save</a>
+				<!--<a id="email" class="ui-btn ui-corner-all">Email</a>-->
+				<a id="restart" class="ui-btn ui-corner-all">Restart</a>
+				<br>
+				<div id="done-diagram"></div>
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
