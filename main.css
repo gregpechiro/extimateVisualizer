@@ -1,0 +1,24 @@
+.circle {
+    border-radius: 15px;
+    width:100%;
+    border: 2px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    position:relative;
+    text-align: center;
+}
+
+.circle-caption {
+    display: block;
+    left: 0;
+    height: 1em;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -.5em;
+    text-shadow: none;
+}
+
+.ui-header .ui-title, .ui-footer .ui-title {
+    margin: 0 1em 0 1em;
+}

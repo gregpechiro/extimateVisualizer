@@ -1,38 +1,3 @@
-var stagePage =
-'<div data-role="page" id="">'+
-
-    '<div data-role="header">'+
-        '<h1>Stage Name</h1>'+
-    '</div>'+
-    '<div data-role="main" class="ui-content">'+
-        '<span id="name-error" style="color:red;display:none;">Cannot be blank</span>'+
-        '<input type="text" name="name" id="name" value="">'+
-    '</div>'+
-
-    '<div data-role="header">'+
-        '<h1>Time Scale</h1>'+
-    '</div>'+
-    '<div data-role="main" class="ui-content">'+
-        '<input type="range" name="time" id="time" data-highlight="true" min="1" max="10" value="1">'+
-    '</div>'+
-
-    '<div data-role="header">'+
-        '<h1>Complexity Scale</h1>'+
-    '</div>'+
-    '<div data-role="main" class="ui-content">'+
-        '<input type="range" name="complex" id="complex" data-highlight="true" min="1" max="10" value="1">'+
-    '</div>'+
-
-    '<div id="buttons" data-role="main" class="ui-content">'+
-        '<a id="next-stage" class="ui-btn ui-corner-all">Next</a>'+
-        '<a id="done" class="ui-btn ui-corner-all" data-transition="slide">Done</a>'+
-        '<a href="" id="back" class="ui-btn ui-corner-all">Back</a>'+
-        '<a id="remove" class="ui-btn ui-corner-all">Remove</a>'+
-    '</div>'+
-
-'</div>';
-
-var removeButton = '<a id="remove" class="ui-btn ui-corner-all">Remove</a>';
 
 var project = {
     "name": "",
@@ -74,8 +39,6 @@ $(document).ready(function() {
         $.mobile.changePage('#' + nextPage.id, {
             transition: "slide"
         });
-
-
     });
 
     $('a#restart').click(function() {
@@ -97,33 +60,9 @@ $(document).ready(function() {
 
         $('div#done-diagram').html('');
         nextId = 0;
-
     });
 
     $('a#save').click(function() {
-        /*var div = $('<div id="image-div"><div style="text-align:center;"><h1 style="text-decoration:underline;">' + project.name + '<br>Time/Complexity Diagram</h1></div></div>');
-        div.css('opacity', '0.0');
-
-        var diagram = $('div#done-diagram').clone();
-        diagram.css('padding', '1em');
-        diagram.attr('id', 'image-diagram');
-
-        div.append(diagram);
-        div.appendTo('body');
-
-        html2canvas(div, {
-        	background: "#ffffff",
-            onrendered: function(canvas) {
-                var img = canvas.toDataURL("image/png");
-                $('a#hiddenDownload').attr('href', img);
-                $('a#hiddenDownload').attr('download', project.name + '.png');
-                $('a#hiddenDownload')[0].click();
-                div.remove();
-                $('a#hiddenDownload').attr('href', '');
-                $('a#hiddenDownload').attr('download', '');
-            }
-        });*/
-
         prepareImage().then(function(canvas) {
             var img = canvas.toDataURL("image/png");
             $('a#hiddenDownload').attr('href', img);
@@ -131,28 +70,9 @@ $(document).ready(function() {
             $('a#hiddenDownload')[0].click();
             $('a#hiddenDownload').attr('href', '');
             $('a#hiddenDownload').attr('download', '');
-            $('div#image-div').remove();
+             $('div#image-div').remove();
         });
-
     });
-
-    /*$('a#email').click(function() {
-        var d = $('div#done-diagram').clone();
-        d.css('padding', '1em');
-        d.css('opacity', '0.0');
-        d.attr('id', 'image-diagram');
-        d.appendTo('body');
-        html2canvas(d, {
-        	background: "#ffffff",
-            onrendered: function(canvas) {
-                var img = canvas.toDataURL("image/png");
-                console.log(img);
-                document.location = "mailto:gregpechiro@gmail.com?subject=subject goes here&body=this is my body?attachment="+img;
-                d.remove();
-            }
-        });
-    });*/
-
 
 });
 
@@ -183,18 +103,16 @@ function prepareImage() {
         background: "#ffffff",
         canvas: scaledCanvas
     });
-
 }
 
 $(document).on('click', 'a#next-stage', function() {
+    var parent = $(this).closest('div[data-role="page"]');
 
-    var p = $(this).closest('div[data-role="page"]');
-
-    if (!saveStage(p)) {
+    if (!saveStage(parent)) {
         return;
     }
 
-    var id = p.attr('id');
+    var id = parent.attr('id');
 
     if (project.stages.isLast(id)) {
         createStage();
@@ -204,7 +122,6 @@ $(document).on('click', 'a#next-stage', function() {
     $.mobile.changePage('#' + changeId, {
         transition: "slide"
     });
-
 });
 
 function createStage() {
@@ -218,14 +135,13 @@ function createStage() {
 }
 
 $(document).on('click', 'a#back', function() {
+    var parent = $(this).closest('div[data-role="page"]');
 
-    var p = $(this).closest('div[data-role="page"]');
-
-    if (!saveStage(p)) {
+    if (!saveStage(parent)) {
         return;
     }
 
-    var id = p.attr('id');
+    var id = parent.attr('id');
     var loc = 'main';
     if (!project.stages.isFirst(id)) {
         loc = project.stages.previous(id).id;
@@ -235,12 +151,11 @@ $(document).on('click', 'a#back', function() {
         transition: "slide",
         reverse:true
     });
-
 });
 
 $(document).on('click', 'a#remove', function() {
-    var p = $(this).closest('div[data-role="page"]');
-    var id = p.attr('id');
+    var parent = $(this).closest('div[data-role="page"]');
+    var id = parent.attr('id');
     var changeId = "main";
 
     if (project.stages.has(id)) {
@@ -260,14 +175,12 @@ $(document).on('click', 'a#remove', function() {
     $.mobile.changePage('#' + changeId, {
         transition: "slide"
     });
-
 });
 
 $(document).on('click', 'a#done', function() {
+    var parent = $(this).closest('div[data-role="page"]');
 
-    var p = $(this).closest('div[data-role="page"]');
-
-    if (!saveStage(p)) {
+    if (!saveStage(parent)) {
         return;
     }
 
@@ -285,7 +198,6 @@ $(document).on('click', 'a#done', function() {
     $.mobile.changePage('#done', {
         transition: "slide"
     });
-
 });
 
 function saveStage(parent) {
@@ -309,3 +221,37 @@ function saveStage(parent) {
     project.stages.set(id, stage);
     return true;
 }
+
+var stagePage =
+'<div data-role="page" id="">'+
+
+    '<div data-role="header">'+
+        '<h1>Stage Name</h1>'+
+    '</div>'+
+    '<div data-role="main" class="ui-content">'+
+        '<span id="name-error" style="color:red;display:none;">Cannot be blank</span>'+
+        '<input type="text" name="name" id="name" value="">'+
+    '</div>'+
+
+    '<div data-role="header">'+
+        '<h1>Time Scale</h1>'+
+    '</div>'+
+    '<div data-role="main" class="ui-content">'+
+        '<input type="range" name="time" id="time" data-highlight="true" min="1" max="10" value="1">'+
+    '</div>'+
+
+    '<div data-role="header">'+
+        '<h1>Complexity Scale</h1>'+
+    '</div>'+
+    '<div data-role="main" class="ui-content">'+
+        '<input type="range" name="complex" id="complex" data-highlight="true" min="1" max="10" value="1">'+
+    '</div>'+
+
+    '<div id="buttons" data-role="main" class="ui-content">'+
+        '<a id="next-stage" class="ui-btn ui-corner-all">Next</a>'+
+        '<a id="done" class="ui-btn ui-corner-all" data-transition="slide">Done</a>'+
+        '<a href="" id="back" class="ui-btn ui-corner-all">Back</a>'+
+        '<a id="remove" class="ui-btn ui-corner-all">Remove</a>'+
+    '</div>'+
+
+'</div>';
